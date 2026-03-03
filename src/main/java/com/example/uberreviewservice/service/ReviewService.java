@@ -36,6 +36,6 @@ public class ReviewService implements CommandLineRunner {
         }
 
 
-        reviewRepository.deleteById(2L);
+        // reviewRepository.deleteById(2L);
     }
 }
