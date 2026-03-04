@@ -2,12 +2,12 @@ package com.example.uberreviewservice.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.TenantId;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -20,8 +20,8 @@ import java.util.Date;
 
 public class Review {
     @Id //this annotation makes the id property as a primary key of our table
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id ;
+    @GeneratedValue(generator = "UUID")
+    private UUID id ;
 
     @Column(nullable = false) //this will not change once the column is created bcz  in properties we have given update
     private String content;
