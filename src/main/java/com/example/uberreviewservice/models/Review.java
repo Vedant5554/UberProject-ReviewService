@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity //work on java logic layer
 @Table(name = "BookingReview") //work on the database logic layer
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Review extends BaseModel{
 
 
