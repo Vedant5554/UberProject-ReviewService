@@ -3,12 +3,13 @@ package com.example.uberreviewservice.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.AnyDiscriminatorImplicitValues;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
-import java.util.UUID;
+
 
 
 @EntityListeners(AuditingEntityListener.class)
@@ -17,8 +18,8 @@ import java.util.UUID;
 @Setter
 public abstract class BaseModel {
     @Id //this annotation makes the id property as a primary key of our table
-    @GeneratedValue(generator = "UUID")
-    protected UUID id ;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id ;
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP) //This annotation tells spring about the formats of date object to be started i.e. Date /Time /Timestamp
