@@ -1,19 +1,16 @@
 package com.example.uberreviewservice.service;
 
 import com.example.uberreviewservice.models.Booking;
-import com.example.uberreviewservice.models.CustomDriver;
 import com.example.uberreviewservice.models.Driver;
-import com.example.uberreviewservice.models.Review;
 import com.example.uberreviewservice.repositories.BookingRepository;
 import com.example.uberreviewservice.repositories.DriverRepository;
 import com.example.uberreviewservice.repositories.ReviewRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ReviewService implements CommandLineRunner {
@@ -31,6 +28,7 @@ public class ReviewService implements CommandLineRunner {
         this.driverRepository = driverRepository;
     }
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         System.out.println("****************");
 
@@ -77,7 +75,14 @@ public class ReviewService implements CommandLineRunner {
 ////        Optional<Booking> b = bookingRepository.findById(1L);
 //        }
         // reviewRepository.deleteById(2L);
-        Optional<CustomDriver> d = driverRepository.hqlfindByIdAndLicense(1L,"DL121212");
-        System.out.println(d.get().getName());
+        List<Long> driver_id = new ArrayList<>(Arrays.asList(1L,2L,3L,4L,5L));
+        List<Driver> drivers = driverRepository.findAllByIdIn(driver_id);
+//        List<Booking> bookings = bookingRepository.findAllByDriverIn((drivers)); //this is the first solution for the N+1 solution
+        for(Driver driver:drivers){
+
+            List <Booking> bookings = driver.getBooking(); // This for loop will end up having N+1 problem it will unnecessarly creates join for every column while going through loop every time
+            bookings.forEach(booking -> System.out.println(booking.getId())); // this is 2nd one for these we need to makeehre fetchtype is lazy add annotation in which fetchmode is subselect @Fetch(fetchMode.subselect) but before this add this current class as @Transactional
+        }
+
     }
 }
