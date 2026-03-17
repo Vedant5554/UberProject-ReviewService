@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -22,13 +23,11 @@ public abstract class BaseModel {
     protected Long id ;
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP) //This annotation tells spring about the formats of date object to be started i.e. Date /Time /Timestamp
     @CreatedDate  //this annotation tells spring that only handle it for object creation
-    protected Date createdAt;
+    protected LocalDateTime createdAt;
 
 
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate  // this annotation tells spring that only handle it for object update
-    protected Date updatedAt;
+    protected LocalDateTime updatedAt;
 }

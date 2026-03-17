@@ -4,6 +4,7 @@ package com.example.uberreviewservice.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -20,13 +21,12 @@ public class Booking extends BaseModel{
     @Enumerated(value = EnumType.STRING)
     private BookingStatus bookingStatus;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "start_time")
-    private Date startTime;
+    private LocalDateTime startTime;
 
-    @Temporal(TemporalType.TIMESTAMP)
+
     @Column(name = "end_time")
-    private Date endTime;
+    private LocalDateTime endTime;
 
     private Long totalDistance;
 
