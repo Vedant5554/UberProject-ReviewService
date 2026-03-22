@@ -2,12 +2,7 @@ package com.example.uberreviewservice.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.Date;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -19,11 +14,14 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Review extends BaseModel{
 
-
     @Column(nullable = false) //this will not change once the column is created bcz  in properties we have given update
     private String content;
 
     private Double rating;
+
+    @OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Booking booking; //we have one to one relation with review and booking
 
 
 
