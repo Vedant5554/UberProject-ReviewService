@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class ReviewServiceImpl implements ReviewService {
 
@@ -24,21 +23,19 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Optional<Review> findReviewById(Long id) throws EntityNotFoundException {
         Optional<Review> review;
-        try{
+        try {
             review = this.reviewRepository.findById(id);
-            if(review.isEmpty()){
-                throw new EntityNotFoundException("Entity not found with id " + id + ".");
+            if (review.isEmpty()) {
+                throw new EntityNotFoundException("Review with id " + id + " not found");
             }
-
         }catch (Exception e){
             e.printStackTrace();
             if(e.getClass() == EntityNotFoundException.class){
                 throw new FetchNotFoundException("Review with id " + id + " not found", id);
             }
-            throw new FetchNotFoundException("Unable to fetch, Please try again later!", id);
+            throw new FetchNotFoundException("Unable to fetch, PLease try again later!", id);
         }
         return review;
-
     }
 
     @Override
@@ -48,14 +45,14 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public boolean deleteReviewById(Long id) {
-        try{
-            Review review = this.reviewRepository.findById(id).orElseThrow(EntityNotFoundException ::new);
+        try {
+            Review review = this.reviewRepository.findById(id).orElseThrow(EntityNotFoundException::new);
             this.reviewRepository.delete(review);
             return true;
-
-        }catch(Exception e){
+        } catch (Exception e) {
             return false;
         }
+
     }
 
     @Override
